@@ -169,6 +169,7 @@ return [
 
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
         /*
          * Application Service Providers...

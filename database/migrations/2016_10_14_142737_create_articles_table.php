@@ -21,7 +21,6 @@ class CreateArticlesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->text('description');
             $table->string('short_description', 1000);
-            $table->string('seo_description', 1000);
             $table->integer('hits');
             $table->integer('likes');
             $table->tinyInteger('status')->default(0);

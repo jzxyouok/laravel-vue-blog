@@ -5,31 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\ArticlesCreateRequest;
 use App\Http\Requests\ArticlesUpdateRequest;
-use App\Repositories\ArticlesRepository;
-use App\Validators\ArticlesValidator;
+use App\Repositories\ArticleRepository;
 
 
 class ArticlesController extends Controller
 {
 
     /**
-     * @var ArticlesRepository
+     * @var ArticleRepository
      */
     protected $repository;
 
-    /**
-     * @var ArticlesValidator
-     */
-    protected $validator;
-
-    public function __construct(ArticlesRepository $repository, ArticlesValidator $validator)
+    public function __construct(ArticleRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
 
@@ -44,7 +35,6 @@ class ArticlesController extends Controller
         $articles = $this->repository->all();
 
         if (request()->wantsJson()) {
-
             return response()->json([
                 'data' => $articles,
             ]);
@@ -62,34 +52,19 @@ class ArticlesController extends Controller
      */
     public function store(ArticlesCreateRequest $request)
     {
+        $article = $this->repository->create($request->all());
 
-        try {
+        $response = [
+            'message' => 'Articles created.',
+            'data'    => $article->toArray(),
+        ];
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        if ($request->wantsJson()) {
 
-            $article = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Articles created.',
-                'data'    => $article->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json($response);
         }
+
+        return redirect()->back()->with('message', $response['message']);
     }
 
 

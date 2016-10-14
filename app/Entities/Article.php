@@ -18,7 +18,6 @@ class Article extends Model implements Transformable
         'alias',
         'description',
         'short_description',
-        'seo_description',
         'hits',
         'likes',
         'status',

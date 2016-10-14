@@ -9,7 +9,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="">
-
+	@yield('meta')
 	<!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -19,7 +19,7 @@
 	<!--[if IE 7]>
 		<link href="css/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" />
 	<![endif]-->
-	
+	@yield('styles')
 	<!-- Web Fonts  -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css' />
 
@@ -82,130 +82,7 @@
 		<!-- posts -->
 		<div class="span8"> 
 
-			<!-- Example of image blog item
-			================================================== -->
-			<article class="post image-post">
-
-				<!-- entry media -->
-				<a href="blog-single.html" class="entry-media">
-					<img src="http://farm8.staticflickr.com/7111/7048321321_9943607a32_c.jpg" alt="" />
-				</a>
-
-				<!-- entry body -->
-				<div class="entry-body">
-					<a href="blog-single.html">
-						<h2 class="entry-title">
-							Back to nature
-						</h2>
-					</a>
-					<p>Cupcake ipsum dolor sit amet wafer gummi bears pudding applicake. Jujubes brownie powder. Sweet roll powder gingerbread gummies. Cupcake ice cream sweet roll pie lollipop. </p>
-				</div>
-
-				<!-- entry meta -->
-				<div class="entry-meta">
-					<span class="entry-type"></span>
-					<span class="entry-date">Jun 13, 2012</span>
-					<span class="entry-comments"> 12 comments</span>
-				</div>
-
-				<!-- clearfix -->
-				<div class="clr"></div>
-
-			</article><!-- end item -->
-
-			<!-- Example of video blog item
-			================================================== -->
-			<article class="post video-post">
-
-				<a href="blog-single.html" class="entry-media">
-					<iframe src="http://player.vimeo.com/video/20800127?portrait=0&amp;title=0&amp;byline=0&amp;autoplay=0" width="600" height="340" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-				</a>
-				<div class="entry-body">
-					<a href="blog-single.html">
-						<h2 class="entry-title">Deer</h2>
-					</a>
-					<p>Cupcake ipsum dolor sit amet wafer gummi bears pudding applicake. Jujubes brownie powder. Sweet roll powder gingerbread gummies. Cupcake ice cream sweet roll pie lollipop. </p>
-				</div>
-				<div class="entry-meta">
-					<span class="entry-type"></span>
-					<span class="entry-date">Jun 13, 2012</span>
-					<span class="entry-comments"> 12 comments</span>
-				</div>
-				<div class="clr"></div>
-
-			</article><!-- end item -->
-
-			<!-- Default blog item
-			================================================== -->
-			<article class="post">
-
-				<a href="blog-single.html" class="entry-media">
-					<img src="http://farm8.staticflickr.com/7192/6902225428_aab1cb4ac6_c.jpg" alt="" />
-				</a>
-				<div class="entry-body">
-					<a href="blog-single.html">
-						<h2 class="entry-title">Example blog post</h2>
-					</a>
-					<p>Cupcake ipsum dolor sit amet wafer gummi bears pudding applicake. Jujubes brownie powder. Sweet roll powder gingerbread gummies. Cupcake ice cream sweet roll pie lollipop. </p>
-				</div>
-				<div class="entry-meta">
-					<span class="entry-type"></span>
-					<span class="entry-date">Jun 13, 2012</span>
-					<span class="entry-comments"> 12 comments</span>
-				</div>
-				<div class="clr"></div>
-
-			</article><!-- end item -->
-
-			<!-- Example of carousel blog item
-			================================================== -->
-			<article class="post image-post">
-
-				<div id="carousel" class="carousel slide" rel="carousel">
-					<!-- Carousel items -->
-					<div class="carousel-inner">
-						<div class="item active">
-							<img src="http://farm7.staticflickr.com/6121/6017098595_a24475c086_b.jpg" alt="" />
-						</div>
-						<div class="item">
-							<img src="http://farm7.staticflickr.com/6134/6017106909_dfae075629_b.jpg" alt="" />
-						</div>
-					</div>
-					<!-- Carousel navigation -->
-					<a class="carousel-control left" href="#carousel" data-slide="prev"></a>
-					<a class="carousel-control right" href="#carousel" data-slide="next"></a>
-				</div>
-
-				<div class="entry-body">
-					<a href="blog-single.html">
-						<h2 class="entry-title">
-							Example blog post
-						</h2>
-					</a>
-					<p>Cupcake ipsum dolor sit amet wafer gummi bears pudding applicake. Jujubes brownie powder. Sweet roll powder gingerbread gummies. Cupcake ice cream sweet roll pie lollipop. </p>				
-				</div>
-				<div class="entry-meta">
-					<span class="entry-type"></span>
-					<span class="entry-date">Jun 13, 2012</span>
-					<span class="entry-comments"> 12 comments</span>
-				</div>
-				<div class="clr"></div>
-
-			</article><!-- end item -->
-			
-			<hr />
-
-			<!-- Pagination
-			================================================== -->
-			<div class="pagination">
-				<ul>
-					<li><a href="#">&larr; Prev</a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">Next &rarr;</a></li>
-				</ul>
-			</div>
+		@yield('content')
 			
 		</div><!-- end .span8 -->
 
@@ -276,7 +153,6 @@
 
 	</div><!-- end #blog -->
 
-	<script type="text/javascript" src="js/jflickrfeed.min.js"></script>
 	</section>
 
 	<!-- Footer
@@ -286,7 +162,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span4">
-					<a class="brand" href="index.html">
+					<a class="brand" href="/">
 						Plain
 					</a>
 					<p>
@@ -306,11 +182,11 @@
 					</p>
 				</div>
 				<div class="span4 newsletter">
-					<h3>Newsletter</h3>
-					<p>Subscribe to our monthly newsletter and be the first to know about our news and special deals!</p>
+					<h3>Подписка</h3>
+					<p>Подпишитесь на рассылку чтобы первым узнать о новых записях в блоге!</p>
 					<img class="ajax-loader" src="img/ajax-loader.gif" alt="" />
 					<form method="post" id="newsletter-form">
-						<input type="text" placeholder="Enter your E-mail" name="subscribe" />
+						<input type="text" placeholder="Введите E-mail" name="subscribe" />
 						<input type="hidden" name="bot" /><!-- SPAM protection -->
 						<button type="submit" class="icon-ok" id="newsletter-subscribe" ></button>
 					</form>
@@ -319,32 +195,14 @@
 		</div> <!-- end .container -->
 	</footer><!-- end #footer -->
 
-	<footer id="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="span4">
-					&copy; 2010—2012 by <a>Plain</a>
-				</div>
-				<div class="span4">
-					<a href="#" title="Send us email"><span class="__cf_email__" data-cfemail="d0b8b5bcbcbf90a0bcb1b9befeb3bfbd">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></a>, 
-					+123 320 000 123 456
-				</div>
-				<div class="span4">
-					<a href="http://themeforest.net/item/plain/2616790?ref=virae" rel="external" title="">PLAIN</a> BY <a title="Michal Šimonfy" rel="external" href="http://virae.org">VIRAE</a>
-					 &nbsp;|&nbsp; <a title="Buy this template on themeforrest.net" href="http://themeforest.net/item/plain/2616790?ref=virae" rel="external" class="label label-inverse">BUY THIS TEMPLATE</a>
-				</div>
-			</div> <!-- end .row -->		
-		</div> <!-- end .container -->
-	</footer><!-- end #footer-extra -->
-
 	<!-- Javascript - Placed at the end of the document so the pages load faster 
 	================================================== -->
-
+	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.isotope.min.js"></script>
 	<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
 	<script type="text/javascript" src="js/jquery.hotkeys.min.js" charset='utf-8'></script>
 	<script type="text/javascript" src="js/functions.min.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
+	@yield('scripts')
 </body>
 </html>		

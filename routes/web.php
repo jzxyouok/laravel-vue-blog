@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.app');
-});
+Route::get('/', 'ArticlesController@index');
 
 Auth::routes();
 
