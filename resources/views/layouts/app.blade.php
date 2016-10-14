@@ -7,9 +7,11 @@
 
 	<!-- Basic meta tags -->
 	<meta charset="utf-8">
-	<meta name="description" content="Plain is a responsive HTML template with 12-column grid based on popular Twitter Bootstrap framework. This theme is suitable as a clean and easily maintainable template for any business, portfolio or single-project site, with support for mobile devices and latest HTML5 &amp; CSS3 user interface components.">
-
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="">
+
+	<!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Styles -->
 	<link href="css/style.min.css" rel="stylesheet" type="text/css" />
@@ -22,13 +24,20 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css' />
 
 	<!-- Javascript -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
-	<title>Plain - Clean Responsive Bootstrap Theme</title>
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script> -->
+	<title>{{ config('app.name', 'Блог PHP-разработчика') }}</title>
 	<!-- Internet Explorer condition - HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
 </head>
 <body>
 
@@ -42,8 +51,8 @@
 			<div class="navbar-inner">
 				<div class="container">
 					<!-- Logo -->
-					<a class="brand" href="index.html">
-						Блог PHP-разработчика
+					<a class="brand" href="/">
+						{{ config('app.name', 'Блог PHP-разработчика') }}
 					</a>
 					<ul class="nav">
 						<li><a href="index.html">Главная</a></li>
@@ -62,7 +71,7 @@
 	<section id="content" class="container">
 
 	<div class="hero-unit">
-		<p>Точнее сказать не блог, а просто полезные заметки</p>
+		<p>Точнее сказать не блог, а просто простолезные заметки</p>
 	</div>
 
 	<hr />
@@ -336,6 +345,6 @@
 	<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
 	<script type="text/javascript" src="js/jquery.hotkeys.min.js" charset='utf-8'></script>
 	<script type="text/javascript" src="js/functions.min.js"></script>
-	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script><script type="text/javascript">_uacct = "UA-1391454-3";urchinTracker();</script>
+	<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>		

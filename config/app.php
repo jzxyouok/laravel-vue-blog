@@ -167,7 +167,8 @@ return [
          * Package Service Providers...
          */
 
-        //
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
 
         /*
          * Application Service Providers...
