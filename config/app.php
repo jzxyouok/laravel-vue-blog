@@ -170,6 +170,7 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
 
         /*
          * Application Service Providers...

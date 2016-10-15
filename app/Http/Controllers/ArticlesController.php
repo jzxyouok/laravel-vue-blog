@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Requests\ArticlesCreateRequest;
 use App\Http\Requests\ArticlesUpdateRequest;
 use App\Repositories\ArticleRepository;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class ArticlesController extends Controller
@@ -23,7 +23,6 @@ class ArticlesController extends Controller
         $this->repository = $repository;
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -31,16 +30,35 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $articles = $this->repository->all();
-
-        if (request()->wantsJson()) {
+        // factory(\App\Entities\Article::class, 50)->create([
+        //     'category_id' => factory(\App\Entities\Category::class)->create()->id,
+        //     'user_id' => factory(\App\Entities\User::class)->create()->id,
+        // ]);
+        // exit();
+        
+        // $items = \App\Entities\Article::all();
+        // $articles = new LengthAwarePaginator($items['data'], count($items['data']), 10, 1);
+        // dd(\App\Entities\Article::paginate(10));
+        // dd($this->repository->paginate(10));
+        // dd($articles);
+        if (\Request::is('api/*')) {
+            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+            $articles = $this->repository->paginate(10);
             return response()->json([
                 'data' => $articles,
             ]);
         }
+        \JavaScript::put(['itemsUrl' => '/api/articles']);
+        return view('articles.index');
+    }
 
-        return view('articles.index', compact('articles'));
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $article = $this->repository;
+        return view('articles.create', compact('article'));
     }
 
     /**
@@ -66,6 +84,7 @@ class ArticlesController extends Controller
 
         return redirect()->back()->with('message', $response['message']);
     }
+
 
 
     /**

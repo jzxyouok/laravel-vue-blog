@@ -9,7 +9,9 @@
         "laravel/framework": "5.3.*",
         "prettus/l5-repository": "^2.6",
         "laravel/scout": "^1.1",
-        "algolia/algoliasearch-client-php": "^1.10"
+        "algolia/algoliasearch-client-php": "^1.10",
+        "laracasts/utilities": "~2.0",
+        "league/fractal": "^0.14.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -1,64 +1,120 @@
 @extends('layouts.app')
 
 @section('content')
-	<div v-bind:articles="{{ $articles }}">
-		<div v-if="!articles.length">asd</div>
-		<div v-if="articles.length > 0">
-			<article-item :articles="articles"></article-item>
-		</div>
-		<hr />
+	<div id="items-list">
+		<div v-if="!items.length">Записи не найдены</div>
+        <article class="post" v-for="item in items">
+            <a href="item.link" class="entry-media" v-if="item.image">
+                <img src="http://farm8.staticflickr.com/7192/6902225428_aab1cb4ac6_c.jpg" alt="" />
+            </a>
+            <div class="entry-body">
+                <a href="item.link">
+                    <h2 class="entry-title">@{{ item.title }}</h2>
+                </a>
+                <p>@{{ item.short_description }}</p>
+            </div>
+            <div class="entry-meta">
+                <span class="entry-type"></span>
+                <span class="entry-date">@{{ item.publishedDate }}</span>
+                <span class="entry-comments"> @{{ item.commentsCount }} комментариев</span>
+            </div>
+            <div class="clr"></div>
+        </article>
 
-		<!-- Pagination
-		================================================== -->
-		<div class="pagination">
-			<ul>
-				<li><a href="#">&larr; Prev</a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">Next &rarr;</a></li>
-			</ul>
-		</div>
+        <hr>
+
+        <div class="pagination">
+            <ul>
+                <li v-if="pagination.current_page > 1">
+                    <a href="#" aria-label="Previous"
+                       @click.prevent="changePage(pagination.current_page - 1)">
+                        &larr; Пред.
+                    </a>
+                </li>
+                <li v-for="page in pagesNumber"
+                    v-bind:class="[ page == isActived ? 'active' : '']">
+                    <a href="#"
+                       @click.prevent="changePage(page)">@{{ page }}</a>
+                </li>
+                <li v-if="pagination.current_page < pagination.last_page">
+                    <a href="#" aria-label="Next"
+                       @click.prevent="changePage(pagination.current_page + 1)">
+                        След. &rarr;
+                    </a>
+                </li>
+            </ul>
+        </div>
 	</div>
-
-	<template id="article-item">
-	    <div>
-	        <article class="post" v-for="aricle in articles">
-{{-- 	            <a href="article.link" class="entry-media" v-if="article.image">
-	                <img src="http://farm8.staticflickr.com/7192/6902225428_aab1cb4ac6_c.jpg" alt="" />
-	            </a>
-	            <div class="entry-body">
-	                <a href="article.link">
-	                    <h2 class="entry-title">@{{ article.title }}</h2>
-	                </a>
-	                <p>@{{ article.short_description }}</p>
-	            </div>
-	            <div class="entry-meta">
-	                <span class="entry-type"></span>
-	                <span class="entry-date">@{{ article.date }}</span>
-	                <span class="entry-comments"> @{{ article.comments }} комментариев</span>
-	            </div> --}}
-	            <div class="clr"></div>
-	        </article>
-	    </div>
-	</template>
 @endsection
 
 @section('scripts')
 	<script>
-		Vue.component('article-item', {
-			template: "#article-item",
+const app = new Vue({
+    el: '#items-list',
 
-			props: ['articles']
-		});
+    data: {
+	    pagination: {
+	        total_pages: 0,
+	        per_page: 7,
+	        from: 1,
+	        to: 0,
+	        current_page: 1,
+	        last_page: 1
+	    },
+	    offset: 4,// left and right padding from the pagination <span>,just change it to see effects
+	    items: [],
+	    url: itemsUrl
+    },
 
-		const app = new Vue({
-		    el: 'section#content',
+    computed: {
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function () {
+            if (!this.pagination.to) {
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+            var to = from + (this.offset * 2);
+            if (to >= this.pagination.to) {
+                to = this.pagination.to;
+            }
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
 
-		    data: {
-		    	'articles': []
-		    }
-		    // props: ['articles'],
-		});
+    methods: {
+        fetchItems: function (page) {
+            var data = {page: page};
+            this.$http.post(this.url, data).then(function (response) {
+                //look into the routes file and format your response
+                this.items = response.data.data.data;
+                this.pagination = response.data.data.meta.pagination;
+                this.pagination.to = this.pagination.last_page = this.pagination.total_pages;
+                // this.$set('items', response.data.data.data);
+                // this.$set('pagination', response.data.meta.pagination);
+            }, function (error) {
+                // handle error
+            });
+        },
+        changePage: function (page) {
+            this.pagination.current_page = page;
+            this.fetchItems(page);
+            $('#back-to-top').click();
+        }
+    },
+
+    created: function() {
+        this.fetchItems(this.pagination.current_page);
+    }
+});
 	</script>
 @endsection

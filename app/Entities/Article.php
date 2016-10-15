@@ -9,7 +9,8 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class Article extends Model implements Transformable
 {
-    use TransformableTrait, Searchable;
+    use TransformableTrait;
+    // use TransformableTrait, Searchable;
 
     protected $fillable = [
 		'user_id',
@@ -19,7 +20,6 @@ class Article extends Model implements Transformable
         'description',
         'short_description',
         'hits',
-        'likes',
         'status',
         'published_at',
     ];
@@ -32,22 +32,22 @@ class Article extends Model implements Transformable
 
     public function user()
     {
-        return $this->hasOne(App\Entities\User::class);
+        return $this->hasOne(\App\Entities\User::class);
     }
 
     public function category()
     {
-        return $this->hasOne(App\Entities\Category::class);
+        return $this->hasOne(\App\Entities\Category::class);
     }
 
 	public function tags()
     {
-        return $this->belongsToMany(App\Entities\Tag::class);
+        return $this->belongsToMany(\App\Entities\Tag::class);
     }
 
 	public function comments()
     {
-        return $this->hasMany(App\Entities\ArticlesComment::class);
+        return $this->hasMany(\App\Entities\ArticlesComment::class);
     }
     
     /**

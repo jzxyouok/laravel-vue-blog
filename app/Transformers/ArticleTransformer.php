@@ -22,6 +22,11 @@ class ArticleTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
+            'title' => $model->title,
+            'short_description' => $model->short_description,
+            'commentsCount' => $model->comments()->count(),
+            // 'publishedDate' => $model->published_at->format('m d, Y'),
+            'publishedDate' => $model->created_at->format('m d, Y'),
 
             /* place your other model properties here */
 

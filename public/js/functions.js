@@ -16,23 +16,6 @@ jQuery(document).ready(function(e) {
         })
     })();
     (function() {
-        e(".flickr-feed").each(function() {
-            var t = e(this).data("flickr-id"),
-                n = e(this).data("flickr-limit") ? e(this).data("flickr-limit") : 12,
-                r = e(this).data("flickr-tags") ? e(this).data("flickr-tags") : "",
-                i = e(this).data("flickr-tagmode") ? e(this).data("flickr-tagmode") : "any";
-            e(this).jflickrfeed({
-                limit: n,
-                qstrings: {
-                    id: t,
-                    tags: r,
-                    tagmode: i
-                },
-                itemTemplate: '<a href="{{link}}" rel="external"><img src="{{image_s}}" alt="{{title}}" /></a>'
-            })
-        })
-    })();
-    (function() {
         e(window).load(function() {
             e(".link").each(function() {
                 var t = e(this);

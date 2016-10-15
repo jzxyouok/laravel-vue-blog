@@ -19,8 +19,8 @@ class CreateArticlesCommentsTable extends Migration
             $table->string('name', 50);
             $table->string('email', 50);
             $table->string('comment', 1000);
-            $table->integer('ip');
-            $table->string('ua');
+            $table->integer('ip')->nullable();
+            $table->string('ua')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
 

@@ -202,7 +202,8 @@
 	<script type="text/javascript" src="js/jquery.isotope.min.js"></script>
 	<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
 	<script type="text/javascript" src="js/jquery.hotkeys.min.js" charset='utf-8'></script>
-	<script type="text/javascript" src="js/functions.min.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	{{-- <script type="text/javascript" src="js/functions.min.js"></script> --}}
 	@yield('scripts')
 </body>
 </html>		
