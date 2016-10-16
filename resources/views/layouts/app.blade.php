@@ -20,6 +20,14 @@
 		<link href="css/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" />
 	<![endif]-->
 	@yield('styles')
+	<style>
+		.autocomplete-suggestions {background: #FFF; overflow: auto; }
+		.autocomplete-suggestion { border: 1px solid #999; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+		.autocomplete-selected { background: #F0F0F0; }
+		.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+		.autocomplete-group { padding: 2px 5px; }
+		.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+	</style>
 	<!-- Web Fonts  -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css' />
 
@@ -92,7 +100,8 @@
 
 			<!-- search plugin -->
 			<div class="widget">
-				<input type="search" class="animated" placeholder="Search" />
+				<input id="main_search" type="search" class="animated" placeholder="Search" />
+				<div class="autocomplete-suggestions"></div>
 			</div>
 
 			<!-- Tags / categories -->
@@ -198,12 +207,36 @@
 	<!-- Javascript - Placed at the end of the document so the pages load faster 
 	================================================== -->
 	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.isotope.min.js"></script>
 	<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
 	<script type="text/javascript" src="js/jquery.hotkeys.min.js" charset='utf-8'></script>
 	<script type="text/javascript" src="js/functions.js"></script>
 	{{-- <script type="text/javascript" src="js/functions.min.js"></script> --}}
+	<script>
+		$(function(){
+			console.log('ready');
+			$('#main_search').autocomplete({
+				serviceUrl: '/api/search-articles',
+				type: 'POST',
+				dataType: 'json',
+				minChars: 2,
+				showNoSuggestionNotice: true,
+				deferRequestBy: 100,
+				transformResult: function(response) {
+					return {
+						suggestions: $.map(response.data.data, function(dataItem) {
+							return { value: dataItem.title, data: dataItem.id };
+						})
+					};
+				},
+				onSelect: function (suggestion) {
+					alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+				}
+			});
+		});
+	</script>
 	@yield('scripts')
 </body>
 </html>		

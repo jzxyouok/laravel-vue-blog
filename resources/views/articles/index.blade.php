@@ -54,10 +54,7 @@ const app = new Vue({
 
     data: {
 	    pagination: {
-	        total_pages: 0,
-	        per_page: 7,
-	        from: 1,
-	        to: 0,
+	        per_page: 10,
 	        current_page: 1,
 	        last_page: 1
 	    },
@@ -71,7 +68,7 @@ const app = new Vue({
             return this.pagination.current_page;
         },
         pagesNumber: function () {
-            if (!this.pagination.to) {
+            if (!this.pagination.last_page) {
                 return [];
             }
             var from = this.pagination.current_page - this.offset;
@@ -79,8 +76,8 @@ const app = new Vue({
                 from = 1;
             }
             var to = from + (this.offset * 2);
-            if (to >= this.pagination.to) {
-                to = this.pagination.to;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
             }
             var pagesArray = [];
             while (from <= to) {
@@ -97,8 +94,10 @@ const app = new Vue({
             this.$http.post(this.url, data).then(function (response) {
                 //look into the routes file and format your response
                 this.items = response.data.data.data;
-                this.pagination = response.data.data.meta.pagination;
-                this.pagination.to = this.pagination.last_page = this.pagination.total_pages;
+                // this.pagination = response.data.data.meta.pagination;
+                this.pagination.per_page = response.data.data.meta.pagination.per_page;
+                this.pagination.current_page = response.data.data.meta.pagination.current_page;
+                this.pagination.last_page = response.data.data.meta.pagination.total_pages;
                 // this.$set('items', response.data.data.data);
                 // this.$set('pagination', response.data.meta.pagination);
             }, function (error) {

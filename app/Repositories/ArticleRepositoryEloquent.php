@@ -6,6 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\ArticleRepository;
 use App\Entities\Article;
+use Prettus\Repository\Traits\CacheableRepository;
 
 /**
  * Class ArticleRepositoryEloquent
@@ -13,6 +14,8 @@ use App\Entities\Article;
  */
 class ArticleRepositoryEloquent extends BaseRepository implements ArticleRepository
 {
+//    use CacheableRepository;
+
     /**
      * Specify Model class name
      *
@@ -21,6 +24,30 @@ class ArticleRepositoryEloquent extends BaseRepository implements ArticleReposit
     public function model()
     {
         return Article::class;
+    }
+
+    /**
+     * Retrieve all data of repository
+     *
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function all($columns = ['*'])
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+
+        if ($this->model instanceof \Illuminate\Database\Eloquent\Builder || $this->model instanceof \Laravel\Scout\Builder) {
+            $results = $this->model->get($columns);
+        } else {
+            $results = $this->model->all($columns);
+        }
+
+        $this->resetModel();
+        $this->resetScope();
+
+        return $this->parserResult($results);
     }
 
 

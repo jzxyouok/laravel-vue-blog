@@ -9,8 +9,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class Article extends Model implements Transformable
 {
-    use TransformableTrait;
-    // use TransformableTrait, Searchable;
+    use TransformableTrait, Searchable;
 
     protected $fillable = [
 		'user_id',
@@ -57,11 +56,13 @@ class Article extends Model implements Transformable
      */
     public function toSearchableArray()
     {
-        $array = $this->toArray();
-
-        // Customize array...
-
-        return $array;
+        // $array = $this->toArray();
+        // return $array;
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description
+        ];
     }
 
 }

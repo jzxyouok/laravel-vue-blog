@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Criteria\SearchCriteria;
 use App\Http\Requests;
 use App\Http\Requests\ArticlesCreateRequest;
 use App\Http\Requests\ArticlesUpdateRequest;
@@ -30,19 +31,14 @@ class ArticlesController extends Controller
      */
     public function index()
     {
+        // \App\Entities\Article::where('id', '>', 0)->delete();
         // factory(\App\Entities\Article::class, 50)->create([
         //     'category_id' => factory(\App\Entities\Category::class)->create()->id,
         //     'user_id' => factory(\App\Entities\User::class)->create()->id,
         // ]);
-        // exit();
-        
-        // $items = \App\Entities\Article::all();
-        // $articles = new LengthAwarePaginator($items['data'], count($items['data']), 10, 1);
-        // dd(\App\Entities\Article::paginate(10));
-        // dd($this->repository->paginate(10));
-        // dd($articles);
+        // die('OK');
         if (\Request::is('api/*')) {
-            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+//            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
             $articles = $this->repository->paginate(10);
             return response()->json([
                 'data' => $articles,
@@ -50,6 +46,18 @@ class ArticlesController extends Controller
         }
         \JavaScript::put(['itemsUrl' => '/api/articles']);
         return view('articles.index');
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $this->repository->pushCriteria(new SearchCriteria(request()->input('query')));
+        $articles = $this->repository->all();
+        return response()->json([
+            'data' => $articles,
+        ]);
     }
 
     /**

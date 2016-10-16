@@ -17,8 +17,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-
 Route::post('/articles', 'ArticlesController@index');
+
+Route::post('/search-articles', 'ArticlesController@search');
 
 // Route::get('/articles', function () {
     // $results =  \App\Post::latest()->paginate(7);

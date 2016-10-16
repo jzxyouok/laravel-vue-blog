@@ -31,8 +31,8 @@ $factory->define(App\Entities\Category::class, function (Faker\Generator $faker)
 
 $factory->define(App\Entities\Article::class, function (Faker\Generator $faker) {
     return [
-        'title' => $faker->title,
-        'alias' => $faker->title,
+        'title' => $faker->sentence,
+        'alias' => $faker->sentence,
         'description' => $faker->text,
         'short_description' => $faker->paragraph,
     ];

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'ArticlesController@index');
+Route::resource('articles', 'ArticlesController');
 
 Auth::routes();
 
