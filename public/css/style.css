@@ -1,3 +1,6 @@
+@import url("bootstrap/bootstrap.min.css");
+@import url("bootstrap/bootstrap-responsive.min.css");
+@import url("bootstrap-override.css");
 :focus {
     outline-color: transparent !important;
     outline-style: none !important
@@ -2206,7 +2209,7 @@ input.search {
     background: url(../img/search.png) 5px 5px no-repeat #fff
 }
 
-input.animated {
+/*input.animated {
     width: 50%;
     -webkit-transition: width .4s ease;
     -moz-transition: width .4s ease;
@@ -2217,7 +2220,7 @@ input.animated {
 
 input.animated:focus {
     width: 84%
-}
+}*/
 
 .services h3 {
     color: #222
@@ -2638,4 +2641,8 @@ input.animated:focus {
 .social-network.youtube:hover,
 .active .social-network.youtube {
     background-position: -1260px 0
+}
+
+.form-search .input-append .btn {
+    padding: 5px 12px;
 }

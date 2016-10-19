@@ -34,11 +34,9 @@
         data: function() {
             return {
                 pagination: {
-                    total_pages: 0,
-                    per_page: 7,
-                    from: 1,
-                    to: 0,
-                    current_page: 1
+                    per_page: 10,
+                    current_page: 1,
+                    last_page: 1
                 },
                 offset: 4,// left and right padding from the pagination <span>,just change it to see effects
                 items: []

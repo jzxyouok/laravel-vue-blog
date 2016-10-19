@@ -37,6 +37,11 @@ class ArticlesController extends Controller
         //     'user_id' => factory(\App\Entities\User::class)->create()->id,
         // ]);
         // die('OK');
+        $url = '/api/articles/';
+        if (\Request::input('query')) {
+            $url = '/api/articles/?query=' . \Request::input('query');
+        }
+
         if (\Request::is('api/*')) {
 //            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
             $articles = $this->repository->paginate(10);
@@ -44,7 +49,7 @@ class ArticlesController extends Controller
                 'data' => $articles,
             ]);
         }
-        \JavaScript::put(['itemsUrl' => '/api/articles']);
+        \JavaScript::put(['itemsUrl' => $url]);
         return view('articles.index');
     }
 

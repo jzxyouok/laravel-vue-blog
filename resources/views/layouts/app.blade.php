@@ -14,7 +14,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Styles -->
-	<link href="css/style.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
 	<link href="css/font-awesome/font-awesome.min.css" rel="stylesheet" />
 	<!--[if IE 7]>
 		<link href="css/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" />
@@ -22,7 +22,7 @@
 	@yield('styles')
 	<style>
 		.autocomplete-suggestions {background: #FFF; overflow: auto; }
-		.autocomplete-suggestion { border: 1px solid #999; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+		.autocomplete-suggestion { border: 1px solid #ccc; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 		.autocomplete-selected { background: #F0F0F0; }
 		.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
 		.autocomplete-group { padding: 2px 5px; }
@@ -100,8 +100,17 @@
 
 			<!-- search plugin -->
 			<div class="widget">
-				<input id="main_search" type="search" class="animated" placeholder="Search" />
-				<div class="autocomplete-suggestions"></div>
+				<form class="form-search">
+					<div class="input-append">
+						<input type="search" name="query" class="span2 search-query animated">
+						<button type="submit" class="btn">Search</button>
+					</div>
+				</form>
+{{-- 				<form>
+					<input id="main_search" type="search" class="animated" placeholder="Search" />
+					<button type="submit">s</button>
+				</form>
+				<div class="autocomplete-suggestions"></div> --}}
 			</div>
 
 			<!-- Tags / categories -->
@@ -221,13 +230,11 @@
 				serviceUrl: '/api/search-articles',
 				type: 'POST',
 				dataType: 'json',
-				minChars: 2,
-				showNoSuggestionNotice: true,
 				deferRequestBy: 100,
 				transformResult: function(response) {
 					return {
-						suggestions: $.map(response.data.data, function(dataItem) {
-							return { value: dataItem.title, data: dataItem.id };
+						suggestions: $.map(response.data.data, function(item) {
+							return { value: item.title, data: item.id };
 						})
 					};
 				},
