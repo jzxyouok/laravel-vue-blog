@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Requests\ArticlesCreateRequest;
 use App\Http\Requests\ArticlesUpdateRequest;
 use App\Repositories\ArticleRepository;
+use App\Repositories\CategoryRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -17,11 +19,23 @@ class ArticlesController extends Controller
     /**
      * @var ArticleRepository
      */
-    protected $repository;
+    private $article;
+    /**
+     * @var CategoryRepository
+     */
+    private $category;
+    /**
+     * @var TagRepository
+     */
+    private $tag;
 
-    public function __construct(ArticleRepository $repository)
+    public function __construct(ArticleRepository $article, CategoryRepository $category, TagRepository $tag)
     {
-        $this->repository = $repository;
+        $this->article = $article;
+        $this->category = $category;
+        $this->tag = $tag;
+
+        $this->middleware('auth')->only(['create', 'update']);
     }
 
     /**
@@ -43,8 +57,8 @@ class ArticlesController extends Controller
         }
 
         if (\Request::is('api/*')) {
-//            $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-            $articles = $this->repository->paginate(10);
+//            $this->article->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+            $articles = $this->article->paginate(10);
             return response()->json([
                 'data' => $articles,
             ]);
@@ -58,8 +72,8 @@ class ArticlesController extends Controller
      */
     public function search()
     {
-        $this->repository->pushCriteria(new SearchCriteria(request()->input('query')));
-        $articles = $this->repository->all();
+        $this->article->pushCriteria(new SearchCriteria(request()->input('query')));
+        $articles = $this->article->all();
         return response()->json([
             'data' => $articles,
         ]);
@@ -70,8 +84,10 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        $article = $this->repository;
-        return view('articles.create', compact('article'));
+        $submitButtonText = 'Create';
+        $categories = $this->category->pluck('name', 'id');
+        $tags = $this->tag->pluck('name', 'id');
+        return view('articles.create', compact('submitButtonText', 'categories', 'tags'));
     }
 
     /**
@@ -81,21 +97,11 @@ class ArticlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticlesCreateRequest $request)
+    public function store(ArticlesCreateRequest $form)
     {
-        $article = $this->repository->create($request->all());
+        $form->persist();
 
-        $response = [
-            'message' => 'Articles created.',
-            'data'    => $article->toArray(),
-        ];
-
-        if ($request->wantsJson()) {
-
-            return response()->json($response);
-        }
-
-        return redirect()->back()->with('message', $response['message']);
+        return redirect('/')->with('message', 'Запись создана');
     }
 
 
@@ -103,19 +109,15 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  string $slug
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $article = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $article,
-            ]);
+        $article = $this->article->findByField('alias', $slug)->first();
+        if (is_null($article)) {
+            abort(404, 'Запись не найдена.');
         }
 
         return view('articles.show', compact('article'));
@@ -131,10 +133,12 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-
-        $article = $this->repository->find($id);
-
-        return view('articles.edit', compact('article'));
+        $article = $this->article->find($id);
+        $article->tags_id = $article->tags()->pluck('id')->toArray();
+        $submitButtonText = 'Update';
+        $categories = $this->category->pluck('name', 'id');
+        $tags = $this->tag->pluck('name', 'id');
+        return view('articles.edit', compact('submitButtonText', 'article', 'categories', 'tags'));
     }
 
 
@@ -146,38 +150,11 @@ class ArticlesController extends Controller
      *
      * @return Response
      */
-    public function update(ArticlesUpdateRequest $request, $id)
+    public function update(ArticlesUpdateRequest $form, $id)
     {
+        $form->persist($id);
 
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $article = $this->repository->update($id, $request->all());
-
-            $response = [
-                'message' => 'Articles updated.',
-                'data'    => $article->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect('/')->with('message', 'Запись отредактирована');
     }
 
 
@@ -190,7 +167,7 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->article->delete($id);
 
         if (request()->wantsJson()) {
 

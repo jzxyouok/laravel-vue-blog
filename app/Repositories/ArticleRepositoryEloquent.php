@@ -59,8 +59,8 @@ class ArticleRepositoryEloquent extends BaseRepository implements ArticleReposit
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function presenter()
-    {
-        return \App\Presenters\ArticlePresenter::class;
-    }
+    // public function presenter()
+    // {
+    //     return \App\Presenters\ArticlePresenter::class;
+    // }
 }

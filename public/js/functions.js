@@ -1,6 +1,13 @@
 jQuery("html").removeClass("no-js").addClass("js");
 if (navigator.appVersion.indexOf("Mac") != -1) jQuery("html").addClass("osx");
 jQuery(document).ready(function(e) {
+    (function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    })();
     (function() {
         e("[rel=carousel]").carousel();
         e("[rel=tooltip]").tooltip();

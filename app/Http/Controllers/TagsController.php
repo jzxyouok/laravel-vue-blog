@@ -9,27 +9,20 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\TagsCreateRequest;
 use App\Http\Requests\TagsUpdateRequest;
-use App\Repositories\TagsRepository;
-use App\Validators\TagsValidator;
+use App\Repositories\TagRepository;
 
 
 class TagsController extends Controller
 {
 
     /**
-     * @var TagsRepository
+     * @var TagRepository
      */
     protected $repository;
 
-    /**
-     * @var TagsValidator
-     */
-    protected $validator;
-
-    public function __construct(TagsRepository $repository, TagsValidator $validator)
+    public function __construct(TagRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
 

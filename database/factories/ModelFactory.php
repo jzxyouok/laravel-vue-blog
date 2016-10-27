@@ -29,6 +29,12 @@ $factory->define(App\Entities\Category::class, function (Faker\Generator $faker)
     ];
 });
 
+$factory->define(App\Entities\Tag::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+    ];
+});
+
 $factory->define(App\Entities\Article::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence,

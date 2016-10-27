@@ -34,6 +34,6 @@ class User extends Authenticatable implements Transformable
 
     public function articles()
     {
-        return $this->hasMany(App\Entities\Article::class);
+        return $this->hasMany(Article::class);
     }
 }

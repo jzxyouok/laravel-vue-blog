@@ -1,3 +1,4 @@
+{{-- @inject('metrics', 'App\Services\MetricsService') --}}
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -14,10 +15,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Styles -->
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<link href="css/font-awesome/font-awesome.min.css" rel="stylesheet" />
+	<link href="/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/css/font-awesome/font-awesome.min.css" rel="stylesheet" />
 	<!--[if IE 7]>
-		<link href="css/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" />
+		<link href="/css/font-awesome/font-awesome-ie7.min.css" rel="stylesheet" />
 	<![endif]-->
 	@yield('styles')
 	<style>
@@ -215,13 +216,13 @@
 
 	<!-- Javascript - Placed at the end of the document so the pages load faster 
 	================================================== -->
-	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/jquery.isotope.min.js"></script>
-	<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
-	<script type="text/javascript" src="js/jquery.hotkeys.min.js" charset='utf-8'></script>
-	<script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+	<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.isotope.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.touchSwipe.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.hotkeys.min.js" charset='utf-8'></script>
+	<script type="text/javascript" src="/js/functions.js"></script>
 	{{-- <script type="text/javascript" src="js/functions.min.js"></script> --}}
 	<script>
 		$(function(){

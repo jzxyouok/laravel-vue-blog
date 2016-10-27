@@ -9,27 +9,19 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\CategoriesCreateRequest;
 use App\Http\Requests\CategoriesUpdateRequest;
-use App\Repositories\CategoriesRepository;
-use App\Validators\CategoriesValidator;
-
+use App\Repositories\CategoryRepository;
 
 class CategoriesController extends Controller
 {
 
     /**
-     * @var CategoriesRepository
+     * @var CategoryRepository
      */
     protected $repository;
 
-    /**
-     * @var CategoriesValidator
-     */
-    protected $validator;
-
-    public function __construct(CategoriesRepository $repository, CategoriesValidator $validator)
+    public function __construct(CategoryRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
 
