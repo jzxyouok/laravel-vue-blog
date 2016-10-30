@@ -36,7 +36,7 @@ class Article extends Model implements Transformable
 
     public function category()
     {
-        return $this->hasOne(\App\Entities\Category::class);
+        return $this->belongsTo(\App\Entities\Category::class);
     }
 
 	public function tags()

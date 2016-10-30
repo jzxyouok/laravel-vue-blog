@@ -93,7 +93,7 @@ class ArticlesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ArticlesCreateRequest $request
+     * @param  ArticlesCreateRequest $form
      *
      * @return \Illuminate\Http\Response
      */
@@ -113,13 +113,12 @@ class ArticlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id, $slug)
     {
-        $article = $this->article->findByField('alias', $slug)->first();
+        $article = $this->article->find($id);
         if (is_null($article)) {
             abort(404, 'Запись не найдена.');
         }
-
         return view('articles.show', compact('article'));
     }
 

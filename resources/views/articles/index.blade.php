@@ -8,7 +8,7 @@
                 <img src="http://farm8.staticflickr.com/7192/6902225428_aab1cb4ac6_c.jpg" alt="" />
             </a>
             <div class="entry-body">
-                <a v-bind:href="item.alias">
+                <a v-bind:href="item.id + '/' + item.alias">
                     <h2 class="entry-title">@{{ item.title }}</h2>
                 </a>
                 <p>@{{ item.short_description }}</p>

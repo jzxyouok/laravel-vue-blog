@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleUpdateRequest extends FormRequest
+class CommentsCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ArticleUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class ArticleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'article_id' => 'required|exists:articles,id',
+            'name' => 'required|min:5',
+            'email' => 'required|email',
+            'comment' => 'required',
         ];
+    }
+
+    public function persist() {
+        return true;
     }
 }

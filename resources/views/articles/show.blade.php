@@ -7,9 +7,9 @@
 <article class="post single-post text-post">
 
 	<!-- entry media -->
-	<a href="blog-single.html" class="entry-media">
+{{-- 	<a href="blog-single.html" class="entry-media">
 		<img src="http://farm8.staticflickr.com/7111/7048321321_9943607a32_c.jpg" alt="" />
-	</a>
+	</a> --}}
 
 	<!-- entry meta -->
 	<div class="entry-meta">
@@ -26,7 +26,18 @@
 
 	<div class="entry-content">
 		{!! $article->description !!}
-		<p><a href="#" title=""><i>Author</i></a></p>
+		<hr>
+		<p>Категория: <a href="{{ url('/categories/'.$article->category->id) }}"><i>{{ $article->category->name }}</i></a></p>
+
+		<p>
+			Теги: 
+			@foreach($article->tags as $tag)
+				<a href="{{ url('/tags/'.$tag->id) }}"><i>{{ $tag->name }}</i></a>
+				@if(!$loop->last)
+					, 
+				@endif
+			@endforeach
+		</p>
 	</div>
 
 	<!-- clearfix -->
@@ -36,94 +47,51 @@
 	================================================== -->
 	<section id="comments">
 		
-		<h4>Comments <span>(4)</span></h4>
+		<h4>Комментарии <span>({{ $article->comments()->count() }})</span></h4>
 
 		<ol class="commentlist">
-
-			<!-- Comment -->
-			<li>
-				
-				<!-- Single comment -->
-				<div class="comment">
-					<div class="avatar"><img src="http://www.gravatar.com/avatar/?d=mm&amp;s=50" alt="" /></div>
-					<div class="comment-meta">
-						<strong>John Doe</strong> 
-						<span class="date">5 February 2012</span> / 
-						<span class="reply"><a href="#">Reply</a></span>
-					</div>
-					<div class="comment-body">
-						Maecenas dignissim euismod nunc, in commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus. Mauris a felis arcu, vitae sollicitudin mauris. Aliquam quis tellus vel massa mattis ornare et eu felis. 
-					</div>
-				</div>
-
-				<!-- Replies -->
-{{-- 				<ol class="comment-replies">
-					<li>
-						<div class="comment">
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/?d=mm&amp;s=50" alt="" /></div>
-							<div class="comment-meta">
-								<strong>John Doe</strong> 
-								<span class="date">5 February 2012</span> / 
-								<span class="reply"><a href="#">Reply</a></span>
-							</div>
-							<div class="comment-body">
-								Maecenas dignissim euismod nunc, in commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus. Mauris a felis arcu, vitae sollicitudin mauris. Aliquam quis tellus vel massa mattis ornare et eu felis. 
-							</div>
-						</div>
-					</li>
-				</ol> --}}
-
-			</li>
-			<!-- end Comment -->
-			
+			@forelse($article->comments as $comment)
 			<li>
 				<div class="comment">
 					<div class="avatar"><img src="http://www.gravatar.com/avatar/?d=mm&amp;s=50" alt="" /></div>
 					<div class="comment-meta">
-						<strong>John Doe</strong> 
-						<span class="date">5 February 2012</span> / 
-						<span class="reply"><a href="#">Reply</a></span>
+						<strong>{{ $article->name }}</strong> 
+						<span class="date">{!! $comment->created_at->diffForHumans() !!}</span>
 					</div>
 					<div class="comment-body">
-						Maecenas dignissim euismod nunc, in commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus. Mauris a felis arcu, vitae sollicitudin mauris. Aliquam quis tellus vel massa mattis ornare et eu felis. 
+						{{ $comment->comment }}
 					</div>
 				</div>
 			</li>
-			<li>
-				<div class="comment">
-					<div class="avatar"><img src="http://www.gravatar.com/avatar/?d=mm&amp;s=50" alt="" /></div>
-					<div class="comment-meta">
-						<strong>John Doe</strong> 
-						<span class="date">5 February 2012</span> / 
-						<span class="reply"><a href="#">Reply</a></span>
-					</div>
-					<div class="comment-body">
-						Maecenas dignissim euismod nunc, in commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus. Mauris a felis arcu, vitae sollicitudin mauris. Aliquam quis tellus vel massa mattis ornare et eu felis. 
-					</div>
-				</div>
-			</li>
+			@empty
+				<li>
+					<hr>
+					Комментариев пока нет.
+				</li>
+			@endforelse
 		</ol><!-- end .commentlist -->
 
-		<h4>Leave a comment</h4>
-
+		<h4>Оставьте комментарий</h4>
 		<br />
 
 		<!-- Comment form
 		================================================== -->
-		<form action="" class="row">
+		<form action="/comments" class="row" method="POST" id="comments-form">
+			{{ csrf_field() }}
+			<input type="hidden" name="article_id" value="{!! $article->id !!}">
 			<div class="span3">
-				<label>Name</label>
-				<input type="text" name placeholder="Your name" />
+				<label>Имя</label>
+				<input type="text" name="name" placeholder="Ваше имя" />
 			</div>
 			<div class="span3">
 				<label>E-mail</label>
-				<input type="email" name placeholder="@" />
+				<input type="text" name="email" placeholder="Ваш E-mail" />
 			</div>
 			<div class="span8">
-				<label>Your comment</label>
-				<textarea name rows="6" placeholder="Your comment"></textarea>
+				<label>Комментарий</label>
+				<textarea name="comment" rows="6" placeholder="Ваш комментарий"></textarea>
 				<p>
-					<button type="submit" class="button yellow"><i class="icon-ok"></i> Post your comment</button>
+					<button type="submit" class="button yellow"><i class="icon-ok"></i> Отправить</button>
 				</p>
 			</div>
 		</form>
@@ -131,4 +99,38 @@
 	</section>
 
 </article><!-- end item -->
+@endsection
+
+@section('scripts')
+	<script>
+		$(function(){
+			$(document).on('submit', '#comments-form', function(event) {
+				event.preventDefault();
+
+	            $.ajax({
+	                url: $(this).attr('action'),
+	                type: 'POST',
+	                dataType: 'json',
+	                data: new FormData(this),
+	                context: this,
+	                async: false,
+	                cache: false,
+	                contentType: false,
+	                processData: false
+	            })
+	            .done(function(response) {
+	                console.log(response);
+	            })
+	            .fail(function(response) {
+	            	console.log(response);
+	            	// this.submitButton.prop('disabled', false).html(this.submitButtonValue);
+	            	// this.form.find('.help-block').html('');
+	                // $.each(response.responseJSON, function(field, value) {
+	                // 	this.form.find('.field-' + field + ' .help-block').html(value);
+	                // }.bind(this));
+	            });
+				
+			});
+		});
+	</script>
 @endsection

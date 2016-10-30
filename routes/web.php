@@ -15,9 +15,10 @@ Route::get('/', 'ArticlesController@index');
 
 Route::resource('articles', 'ArticlesController', ['except' => 'show']);
 Route::resource('categories', 'CategoriesController');
+Route::resource('comments', 'CommentsController');
 Route::resource('tags', 'TagsController');
 
-Route::get('{slug}', 'ArticlesController@show');
+Route::get('/{id}/{slug}', 'ArticlesController@show');
 
 Auth::routes();
 
