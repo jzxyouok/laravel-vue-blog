@@ -5,7 +5,7 @@
 		<div v-if="!items.length">Записи не найдены</div>
         <article class="post" v-for="item in items">
             <a href="item.link" class="entry-media" v-if="item.image">
-                <img src="http://farm8.staticflickr.com/7192/6902225428_aab1cb4ac6_c.jpg" alt="" />
+                <img v-bind:src="item.image" alt="" />
             </a>
             <div class="entry-body">
                 <a v-bind:href="item.id + '/' + item.alias">

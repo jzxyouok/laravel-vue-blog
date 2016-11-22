@@ -51,7 +51,7 @@ class ArticlesController extends Controller
         }
 
         if (\Request::is('api/*')) {
-            $articles = $this->article->with(['comments'])->paginate(10);
+            $articles = $this->article->with(['comments'])->orderBy('created_at', 'DESC')->paginate(10);
             return response()->json([
                 'data' => $articles,
             ]);

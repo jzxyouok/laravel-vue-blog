@@ -22,7 +22,7 @@
                 type: 'POST',
                 dataType: 'json',
                 data: new FormData($('.main-form')[0]),
-                context: this
+                context: this,
                 async: false,
                 cache: false,
                 contentType: false,

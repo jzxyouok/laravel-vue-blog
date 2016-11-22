@@ -192,13 +192,13 @@
 					</p>
 				</div>
 				<div class="span4 social-networks">
-					<h3>Find us elsewhere</h3>
+					<h3>Мои контакты</h3>
 					<p>
-						<a class="social-network twitter"></a>
-						<a class="social-network facebook"></a>
-						<a class="social-network linkedin"></a>
-						<a class="social-network dribbble"></a>
-						<a class="social-network pinterest"></a>
+						<a class="social-network twitter" target="_blank" href="https://twitter.com/MolchanYaroslav"></a>
+						<a class="social-network facebook" target="_blank" href="https://www.facebook.com/yaroslav.molchan"></a>
+						<a class="social-network linkedin" target="_blank" href="https://www.linkedin.com/in/yaroslav-molchan"></a>
+						<a class="social-network gplus2" target="_blank" href="https://plus.google.com/113165765144788622367"></a>
+						<a class="social-network skype" target="_blank" href="skype:yarik_jadson?call"></a>
 					</p>
 				</div>
 				<div class="span4 newsletter">
@@ -227,25 +227,25 @@
 	<script type="text/javascript" src="/js/functions.js"></script>
 	{{-- <script type="text/javascript" src="js/functions.min.js"></script> --}}
 	<script>
-		$(function(){
-			console.log('ready');
-			$('#main_search').autocomplete({
-				serviceUrl: '/api/search-articles',
-				type: 'POST',
-				dataType: 'json',
-				deferRequestBy: 100,
-				transformResult: function(response) {
-					return {
-						suggestions: $.map(response.data.data, function(item) {
-							return { value: item.title, data: item.id };
-						})
-					};
-				},
-				onSelect: function (suggestion) {
-					alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-				}
-			});
-		});
+//		$(function(){
+//			console.log('ready');
+//			$('#main_search').autocomplete({
+//				serviceUrl: '/api/search-articles',
+//				type: 'POST',
+//				dataType: 'json',
+//				deferRequestBy: 100,
+//				transformResult: function(response) {
+//					return {
+//						suggestions: $.map(response.data.data, function(item) {
+//							return { value: item.title, data: item.id };
+//						})
+//					};
+//				},
+//				onSelect: function (suggestion) {
+//					alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+//				}
+//			});
+//		});
 	</script>
 	@yield('scripts')
 </body>

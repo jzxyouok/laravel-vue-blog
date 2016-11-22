@@ -7,9 +7,9 @@
 <article class="post single-post text-post">
 
 	<!-- entry media -->
-{{-- 	<a href="blog-single.html" class="entry-media">
-		<img src="http://farm8.staticflickr.com/7111/7048321321_9943607a32_c.jpg" alt="" />
-	</a> --}}
+ 	{{--<a href="blog-single.html" class="entry-media">--}}
+		{{--<img src="http://farm8.staticflickr.com/7111/7048321321_9943607a32_c.jpg" alt="" />--}}
+	{{--</a>--}}
 
 	<!-- entry meta -->
 	<div class="entry-meta">
@@ -71,30 +71,30 @@
 			@endforelse
 		</ol><!-- end .commentlist -->
 
-		<h4>Оставьте комментарий</h4>
-		<br />
+		{{--<h4>Оставьте комментарий</h4>--}}
+		{{--<br />--}}
 
-		<!-- Comment form
-		================================================== -->
-		<form action="/comments" class="row" method="POST" id="comments-form">
-			{{ csrf_field() }}
-			<input type="hidden" name="article_id" value="{!! $article->id !!}">
-			<div class="span3">
-				<label>Имя</label>
-				<input type="text" name="name" placeholder="Ваше имя" />
-			</div>
-			<div class="span3">
-				<label>E-mail</label>
-				<input type="text" name="email" placeholder="Ваш E-mail" />
-			</div>
-			<div class="span8">
-				<label>Комментарий</label>
-				<textarea name="comment" rows="6" placeholder="Ваш комментарий"></textarea>
-				<p>
-					<button type="submit" class="button yellow"><i class="icon-ok"></i> Отправить</button>
-				</p>
-			</div>
-		</form>
+		{{--<!-- Comment form--}}
+		{{--================================================== -->--}}
+		{{--<form action="/comments" class="row" method="POST" id="comments-form">--}}
+			{{--{{ csrf_field() }}--}}
+			{{--<input type="hidden" name="article_id" value="{!! $article->id !!}">--}}
+			{{--<div class="span3">--}}
+				{{--<label>Имя</label>--}}
+				{{--<input type="text" name="name" placeholder="Ваше имя" />--}}
+			{{--</div>--}}
+			{{--<div class="span3">--}}
+				{{--<label>E-mail</label>--}}
+				{{--<input type="text" name="email" placeholder="Ваш E-mail" />--}}
+			{{--</div>--}}
+			{{--<div class="span8">--}}
+				{{--<label>Комментарий</label>--}}
+				{{--<textarea name="comment" rows="6" placeholder="Ваш комментарий"></textarea>--}}
+				{{--<p>--}}
+					{{--<button type="submit" class="button yellow"><i class="icon-ok"></i> Отправить</button>--}}
+				{{--</p>--}}
+			{{--</div>--}}
+		{{--</form>--}}
 
 	</section>
 
