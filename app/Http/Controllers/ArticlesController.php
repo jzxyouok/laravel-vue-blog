@@ -45,20 +45,13 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        // \App\Entities\Article::where('id', '>', 0)->delete();
-        // factory(\App\Entities\Article::class, 50)->create([
-        //     'category_id' => factory(\App\Entities\Category::class)->create()->id,
-        //     'user_id' => factory(\App\Entities\User::class)->create()->id,
-        // ]);
-        // die('OK');
         $url = '/api/articles/';
         if (\Request::input('query')) {
             $url = '/api/articles/?query=' . \Request::input('query');
         }
 
         if (\Request::is('api/*')) {
-//            $this->article->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-            $articles = $this->article->paginate(10);
+            $articles = $this->article->with(['comments'])->paginate(10);
             return response()->json([
                 'data' => $articles,
             ]);

@@ -22,12 +22,12 @@
 	<![endif]-->
 	@yield('styles')
 	<style>
-		.autocomplete-suggestions {background: #FFF; overflow: auto; }
-		.autocomplete-suggestion { border: 1px solid #ccc; padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-		.autocomplete-selected { background: #F0F0F0; }
-		.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
-		.autocomplete-group { padding: 2px 5px; }
-		.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+		/*.autocomplete-suggestions {background: #FFF; overflow: auto; }*/
+		/*.autocomplete-suggestion { border: 1px solid #ccc; padding: 2px 5px; white-space: nowrap; overflow: hidden; }*/
+		/*.autocomplete-selected { background: #F0F0F0; }*/
+		/*.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }*/
+		/*.autocomplete-group { padding: 2px 5px; }*/
+		/*.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }*/
 	</style>
 	<!-- Web Fonts  -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css' />
@@ -80,7 +80,7 @@
 	<section id="content" class="container">
 
 	<div class="hero-unit">
-		<p>Точнее сказать не блог, а просто простолезные заметки</p>
+		<p>Полезные заметки для работы в одном месте</p>
 	</div>
 
 	<hr />
@@ -98,43 +98,44 @@
 		<!-- Sidebar with widgets
 		================================================== -->
 		<div class="sidebar span4">
-
+			@inject('sidebar', 'App\Services\SidebarDataService')
 			<!-- search plugin -->
 			<div class="widget">
 				<form class="form-search">
 					<div class="input-append">
-						<input type="search" name="query" class="span2 search-query animated">
+						<input id="main_search" type="search" name="query" class="span2 search-query animated">
 						<button type="submit" class="btn">Search</button>
+                        {{--<div class="autocomplete-suggestions"></div>--}}
 					</div>
 				</form>
-{{-- 				<form>
-					<input id="main_search" type="search" class="animated" placeholder="Search" />
-					<button type="submit">s</button>
-				</form>
-				<div class="autocomplete-suggestions"></div> --}}
+ 				{{--<form>--}}
+					{{--<input id="main_search" type="search" class="animated" placeholder="Search" />--}}
+					{{--<button type="submit">s</button>--}}
+				{{--</form>--}}
 			</div>
 
-			<!-- Tags / categories -->
+
+            <!-- Categories -->
+            <div class="widget">
+                <h4>Categories</h4>
+                <ul class="icons-ul list-style">
+                    @forelse($sidebar->categories() as $category)
+                        <li><a href="{!! route('categories.show', ['id' => $category->id]) !!}"><i class="icon-li icon-chevron-right"></i>{!! $category->name !!}</a></li>
+                    @empty
+                        <li>Категорий пока нет</li>
+                    @endforelse
+                </ul>
+            </div>
+
+			<!-- Tags -->
 			<div class="widget">
-				<h4>Categories</h4>
+				<h4>Tags</h4>
 				<ul class="tags">
-					<li><a href="#">design</a></li>
-					<li><a href="#">user interface</a></li>
-					<li><a href="#">typography</a></li>
-					<li><a href="#">apps</a></li>
-					<li><a href="#">mac os/x</a></li>
-				</ul>
-			</div>
-
-			<!-- List widget with custom list icons -->
-			<div class="widget">
-				<h4>List widget</h4>
-				<ul class="icons-ul list-style">
-					<li><i class="icon-li icon-chevron-right"></i>design</li>
-					<li><i class="icon-li icon-chevron-right"></i>user interface</li>
-					<li><i class="icon-li icon-chevron-right"></i>typography</li>
-					<li><i class="icon-li icon-chevron-right"></i>apps</li>
-					<li><i class="icon-li icon-chevron-right"></i>mac os/x</li>
+                    @forelse($sidebar->tags() as $tag)
+                        <li><a href="{!! route('tags.show', ['id' => $tag->id]) !!}">{!! $tag->name !!}</a></li>
+                    @empty
+                        <li>Тегов пока нет</li>
+                    @endforelse
 				</ul>
 			</div>
 
@@ -217,7 +218,8 @@
 	<!-- Javascript - Placed at the end of the document so the pages load faster 
 	================================================== -->
 	<script type="text/javascript" src="/js/app.js"></script>
-	<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+	{{--<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>--}}
+	<script type="text/javascript" src="/js/typeahead.bundle.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.isotope.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.touchSwipe.min.js"></script>

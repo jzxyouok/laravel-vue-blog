@@ -41,5 +41,11 @@ $factory->define(App\Entities\Article::class, function (Faker\Generator $faker) 
         'alias' => $faker->sentence,
         'description' => $faker->text,
         'short_description' => $faker->paragraph,
+        'category_id' => function () {
+            return factory(App\Entities\Category::class)->create()->id;
+        },
+        'user_id' => function () {
+            return factory(App\Entities\User::class)->create()->id;
+        }
     ];
 });

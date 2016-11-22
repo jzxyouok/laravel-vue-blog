@@ -16,7 +16,7 @@
             <div class="entry-meta">
                 <span class="entry-type"></span>
                 <span class="entry-date">@{{ item.publishedDate }}</span>
-                <span class="entry-comments"> @{{ item.commentsCount }} комментариев</span>
+                <span class="entry-comments"> @{{ item.comments.length }} комментариев</span>
             </div>
             <div class="clr"></div>
         </article>
@@ -93,9 +93,9 @@
                 var data = {page: page};
                 this.$http.post(this.url, data).then(function (response) {
                     this.items = response.data.data.data;
-                    this.pagination.per_page = response.data.data.meta.pagination.per_page;
-                    this.pagination.current_page = response.data.data.meta.pagination.current_page;
-                    this.pagination.last_page = response.data.data.meta.pagination.total_pages;
+                    this.pagination.per_page = response.data.data.per_page;
+                    this.pagination.current_page = response.data.data.current_page;
+                    this.pagination.last_page = response.data.data.last_page;
                 }, function (error) {
                     // handle error
                 });

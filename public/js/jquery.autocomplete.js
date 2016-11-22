@@ -32,6 +32,7 @@
                     return value.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
                 },
                 createNode: function (containerClass) {
+                    debugger;
                     var div = document.createElement('div');
                     div.className = containerClass;
                     div.style.position = 'absolute';
