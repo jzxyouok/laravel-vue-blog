@@ -4,8 +4,8 @@
 	<div id="items-list">
 		<div v-if="!items.length">Записи не найдены</div>
         <article class="post" v-for="item in items">
-            <a href="item.link" class="entry-media" v-if="item.image">
-                <img v-bind:src="item.image" alt="" />
+            <a v-bind:href="item.id + '/' + item.alias" class="entry-media" v-if="item.image">
+                <img v-bind:src="'/storage/' + item.image" alt="" />
             </a>
             <div class="entry-body">
                 <a v-bind:href="item.id + '/' + item.alias">

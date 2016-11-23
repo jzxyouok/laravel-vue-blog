@@ -18,7 +18,7 @@ Route::resource('categories', 'CategoriesController');
 Route::resource('comments', 'CommentsController');
 Route::resource('tags', 'TagsController');
 
-Route::get('/{id}/{slug}', 'ArticlesController@show');
+Route::get('/{id}/{slug}', 'ArticlesController@show')->where('id', '[0-9]+');
 
 Auth::routes();
 

@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Criteria\SearchCriteria;
-use App\Http\Requests;
-use App\Http\Requests\ArticlesCreateRequest;
-use App\Http\Requests\ArticlesUpdateRequest;
+use App\Http\Requests\ArticlesCreateUpdateRequest;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TagRepository;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class ArticlesController extends Controller
@@ -52,11 +48,13 @@ class ArticlesController extends Controller
 
         if (\Request::is('api/*')) {
             $articles = $this->article->with(['comments'])->orderBy('created_at', 'DESC')->paginate(10);
+
             return response()->json([
                 'data' => $articles,
             ]);
         }
         \JavaScript::put(['itemsUrl' => $url]);
+
         return view('articles.index');
     }
 
@@ -67,6 +65,7 @@ class ArticlesController extends Controller
     {
         $this->article->pushCriteria(new SearchCriteria(request()->input('query')));
         $articles = $this->article->all();
+
         return response()->json([
             'data' => $articles,
         ]);
@@ -80,23 +79,22 @@ class ArticlesController extends Controller
         $submitButtonText = 'Create';
         $categories = $this->category->pluck('name', 'id');
         $tags = $this->tag->pluck('name', 'id');
+
         return view('articles.create', compact('submitButtonText', 'categories', 'tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ArticlesCreateRequest $form
-     *
+     * @param ArticlesCreateUpdateRequest $form
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticlesCreateRequest $form)
+    public function store(ArticlesCreateUpdateRequest $form)
     {
         $form->persist();
 
         return redirect('/')->with('message', 'Запись создана');
     }
-
 
 
     /**
@@ -112,6 +110,7 @@ class ArticlesController extends Controller
         if (is_null($article)) {
             abort(404, 'Запись не найдена.');
         }
+
         return view('articles.show', compact('article'));
     }
 
@@ -130,6 +129,7 @@ class ArticlesController extends Controller
         $submitButtonText = 'Update';
         $categories = $this->category->pluck('name', 'id');
         $tags = $this->tag->pluck('name', 'id');
+
         return view('articles.edit', compact('submitButtonText', 'article', 'categories', 'tags'));
     }
 
@@ -137,12 +137,12 @@ class ArticlesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  ArticlesUpdateRequest $request
-     * @param  string            $id
-     *
+     * @param ArticlesCreateUpdateRequest $form
+     * @param  string $id
      * @return Response
+     * @internal param ArticlesUpdateRequest $request
      */
-    public function update(ArticlesUpdateRequest $form, $id)
+    public function update(ArticlesCreateUpdateRequest $form, $id)
     {
         $form->persist($id);
 

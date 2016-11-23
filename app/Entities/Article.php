@@ -20,6 +20,7 @@ class Article extends Model implements Transformable
         'short_description',
         'hits',
         'status',
+        'image',
         'published_at',
     ];
 

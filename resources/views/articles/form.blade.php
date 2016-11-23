@@ -26,6 +26,15 @@
 </div>
 
 <div class="form-group">
+    <img id="image-preview" style="height: auto; width: auto" src="">
+    <input type="file" name="image" id="image-upload" class="">
+    {!! Form::input('hidden', 'x1') !!}
+    {!! Form::input('hidden', 'y1') !!}
+    {!! Form::input('hidden', 'x2') !!}
+    {!! Form::input('hidden', 'y2') !!}
+</div>
+
+<div class="form-group">
     <button type="submit" class="button yellow"><i class="icon-ok"></i> {!! $submitButtonText !!}</button>
 </div>
 
@@ -33,6 +42,7 @@
     @parent
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
     <link href="/css/redactor.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/css/imgreaselect/imgareaselect-default.css"/>
 @stop
 
 @section('scripts')
@@ -43,8 +53,32 @@
     <script src="/js/imperavi/plugins/imagemanager/imagemanager.js"></script>
     <script src="/js/imperavi/plugins/fullscreen/fullscreen.js"></script>
     <script src="/js/imperavi/plugins/filemanager/filemanager.js"></script>
+    <script src="/js/jquery.imgareaselect.min.js"></script>
     <script>
         $(function() {
+            $('#image-upload').change(function(){
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('img#image-preview').attr('src', e.target.result);
+                        $('img#image-preview').imgAreaSelect({
+                            maxWidth: 700,
+                            maxHeight: 400,
+                            handles: true,
+                            onSelectEnd: function (img, selection) {
+                                $('input[name="x1"]').val(selection.x1);
+                                $('input[name="y1"]').val(selection.y1);
+                                $('input[name="x2"]').val(selection.x2);
+                                $('input[name="y2"]').val(selection.y2);
+                            }
+                        });
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+
             $('.field-description textarea').redactor({
                 minHeight: 400,
                 imageUpload: "{!! url('/upload/imageUpload') !!}",

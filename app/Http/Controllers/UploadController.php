@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
+    private $storage_path = 'articles';
+
     public function imageUpload(Request $request)
     {
         return $this->upload($request, 'images');
@@ -37,8 +39,8 @@ class UploadController extends Controller
     {
         // checking file is valid.
         if ($request->file('file')->isValid()) {
-            $link = $request->file->store($path);
-            return ['filelink' => '/' . $link];
+            $link = $request->file->store($this->storage_path.'/'.$path);
+            return ['filelink' => Storage::url($link)];
         } else {
             // sending back with error message.
             return false;
@@ -52,11 +54,11 @@ class UploadController extends Controller
     protected function manager($path)
     {
         $result = [];
-        $files = Storage::files($path);
+        $files = Storage::files($this->storage_path.'/'.$path);
 
         if ($path == 'images') {
             foreach ($files as $file) {
-                $link = '/uploads/' . $file;
+                $link = Storage::url($file);
                 $result[] = [
                     'thumb' => $link,
                     'image' => $link,
@@ -66,7 +68,7 @@ class UploadController extends Controller
         }
         elseif ($path == 'files') {
             foreach ($files as $file) {
-                $link = '/uploads/' . $file;
+                $link = Storage::url($file);
                 $result[] = [
                     'link' => $link,
                     'size' => Storage::size($file),

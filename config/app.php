@@ -172,6 +172,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Orchestra\Imagine\ImagineServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -231,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Imagine' => Orchestra\Imagine\Facade::class,
 
     ],
 
