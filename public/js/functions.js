@@ -9,15 +9,8 @@ jQuery(document).ready(function(e) {
         });
     })();
     (function() {
-        e("[rel=carousel]").carousel();
         e("[rel=tooltip]").tooltip();
         e("[rel=popover]").popover();
-        e(".accordion").on("show", function(t) {
-            e(t.target).prev(".accordion-heading").find(".accordion-toggle").addClass("active")
-        });
-        e(".accordion").on("hide", function(t) {
-            e(this).find(".accordion-toggle").not(e(t.target)).removeClass("active")
-        });
         e(window).load(function() {
             e("a[rel=external]").attr("target", "_blank")
         })
@@ -63,44 +56,6 @@ jQuery(document).ready(function(e) {
         })
     })();
     (function() {
-        e(window).load(function() {
-            function n(n) {
-                t.isotope({
-                    filter: n
-                });
-                e("#portfolio-filter li.active").removeClass("active");
-                e("#portfolio-filter").find("[data-filter='" + n + "']").parent().addClass("active");
-                if (n != "*") window.location.hash = n.replace(".", "");
-                if (n == "*") window.location.hash = ""
-            }
-            var t = e("#portfolio-items");
-            if (t.length) {
-                e(".project").each(function() {
-                    $this = e(this);
-                    var t = $this.data("tags");
-                    if (t) {
-                        var n = t.split(",");
-                        for (var r = n.length - 1; r >= 0; r--) {
-                            $this.addClass(n[r])
-                        }
-                    }
-                });
-                t.isotope({
-                    itemSelector: ".project",
-                    layoutMode: "fitRows"
-                });
-                e("#portfolio-filter li a").click(function() {
-                    var t = e(this).attr("data-filter");
-                    n(t);
-                    return false
-                });
-                if (window.location.hash != "") {
-                    n("." + window.location.hash.replace("#", ""))
-                }
-            }
-        })
-    })();
-    (function() {
         e('<i id="back-to-top"></i>').appendTo(e("body"));
         e(window).scroll(function() {
             if (e(this).scrollTop() > e(window).height() / 5) {
@@ -142,34 +97,20 @@ jQuery(document).ready(function(e) {
             e("#newsletter-form").hide();
             e(".newsletter .ajax-loader").show();
             setTimeout(function() {
-                e.post("php/newsletter-form.php", n, function(t) {
+                e.post("/subscribe/create", n, function(t) {
                     e(".newsletter .ajax-loader").hide();
-                    if (t.status == 1) {
-                        e("#newsletter-form").html("&#10004; Thanks, you have been subscribed!");
+                    if (t.ok == true) {
+                        e("#newsletter-form").html("&#10004; " + t.message);
                         e("#newsletter-form").show()
                     } else {
+                        e("#newsletter-form").html("&#10004; " + t.message);
                         e("#newsletter-form").show();
-                        alert(t.errors)
+                        console.log(t.errors);
                     }
                 }, "json")
             }, 600);
             t.preventDefault()
         })
-    })();
-    (function() {
-        function n(t, n) {
-            var r = e(t.currentTarget);
-            if (n === "left") r.find(".carousel-control.right").trigger("click");
-            if (n === "right") r.find(".carousel-control.left").trigger("click")
-        }
-        var t = !!("ontouchstart" in window);
-        if (t === true) {
-            e("#carousel").swipe({
-                allowPageScroll: "auto",
-                swipeLeft: n,
-                swipeRight: n
-            })
-        }
     })();
     (function() {
         e("a[rel=shortcut]").each(function() {

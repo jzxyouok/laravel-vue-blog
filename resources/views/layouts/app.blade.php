@@ -80,7 +80,7 @@
 	<section id="content" class="container">
 
 	<div class="hero-unit">
-		<p>Полезные заметки для работы в одном месте</p>
+		<p>Полезные заметки собраны в одном месте</p>
 	</div>
 
 	<hr />
@@ -182,12 +182,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="span4">
-					<a class="brand" href="/">
-						Plain
+					<a class="brand" href="https://molchan.me" target="_blank">
+						Molchan.Me
 					</a>
 					<p>
-						Creative agency working <br />with web and interactive media. <br />
-						Lorem ipsum dolor sit amet.
+						Информацию обо мне<br />
+						и примеры некоторых моих работ<br />
+						Вы найдете в моем портфолио.
 						
 					</p>
 				</div>
@@ -206,7 +207,7 @@
 					<p>Подпишитесь на рассылку чтобы первым узнать о новых записях в блоге!</p>
 					<img class="ajax-loader" src="img/ajax-loader.gif" alt="" />
 					<form method="post" id="newsletter-form">
-						<input type="text" placeholder="Введите E-mail" name="subscribe" />
+						<input type="text" placeholder="Введите E-mail" name="email" />
 						<input type="hidden" name="bot" /><!-- SPAM protection -->
 						<button type="submit" class="icon-ok" id="newsletter-subscribe" ></button>
 					</form>

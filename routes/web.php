@@ -20,6 +20,8 @@ Route::resource('tags', 'TagsController');
 
 Route::get('/{id}/{slug}', 'ArticlesController@show')->where('id', '[0-9]+');
 
+Route::post('/subscribe/create', 'SubscribeController@create');
+
 Auth::routes();
 
 Route::post('upload/imageUpload', 'UploadController@imageUpload');
